@@ -21,7 +21,7 @@ find_package(Boost COMPONENTS filesystem program_options REQUIRED)
 
 # TODO: has to be upgraded soon.
 if (NOT EXISTS "${CMAKE_SOURCE_DIR}/src/catch/catch.hpp")
-  file(DOWNLOAD "https://github.com/catchorg/Catch2/releases/download/v2.13.10/catch.hpp" "${CMAKE_SOURCE_DIR}/src/catch/catch.hpp")
+  file(DOWNLOAD "https://github.com/catchorg/Catch2/releases/download/v2.13.10/catch.hpp" "${CMAKE_CURRENT_LIST_DIR}/src/catch/catch.hpp")
 endif()
 
 #############################################
