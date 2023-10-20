@@ -27,7 +27,7 @@
 
 #include <fstream>
 
-namespace fs = boost::filesystem;
+namespace bfs = boost::filesystem;
 
 static CppToken classNameFromTemplatedIdentifier(const CppToken& identifier)
 {
@@ -98,17 +98,17 @@ std::string readFile(const std::string& filename)
   return contents;
 }
 
-void collectFiles(std::vector<std::string>& files, const fs::path& path, const CppProgFileSelecter& fileSelector)
+void collectFiles(std::vector<std::string>& files, const bfs::path& path, const CppProgFileSelecter& fileSelector)
 {
-  if (fs::is_regular_file(path))
+  if (bfs::is_regular_file(path))
   {
     auto file = path.string();
     if (fileSelector(file))
       files.push_back(std::move(file));
   }
-  else if (fs::is_directory(path))
+  else if (bfs::is_directory(path))
   {
-    for (fs::directory_iterator dirItr(path); dirItr != fs::directory_iterator(); ++dirItr)
+    for (bfs::directory_iterator dirItr(path); dirItr != bfs::directory_iterator(); ++dirItr)
     {
       collectFiles(files, *dirItr, fileSelector);
     }

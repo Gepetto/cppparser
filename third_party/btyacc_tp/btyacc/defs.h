@@ -5,6 +5,13 @@
 #include <stdio.h>
 #include <limits.h>
 
+#ifdef __GNUC__
+#define BTYACC_TP_FALLTHROUGH() __attribute__((fallthrough))
+#define BTYACC_TP_UNUSED() __attribute__((unused))
+#else
+#define BTYACC_TP_FALLTHROUGH() /**/
+#endif
+
 
 /*  machine-dependent definitions			*/
 /*  the following definitions are for the Tahoe		*/

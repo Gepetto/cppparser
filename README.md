@@ -47,12 +47,12 @@ Below is the program written as unit-test for validating the correctness of gene
 
 #include <boost/filesystem.hpp>
 
-namespace fs = boost::filesystem;
+namespace bfs = boost::filesystem;
 
 TEST_CASE("Parsing hello world program")
 {
   CppParser  parser;
-  const auto testFilePath = fs::path(__FILE__).parent_path() / "test-files/hello-world.cpp";
+  const auto testFilePath = bfs::path(__FILE__).parent_path() / "test-files/hello-world.cpp";
   const auto ast          = parser.parseFile(testFilePath.string());
   REQUIRE(ast != nullptr);
 

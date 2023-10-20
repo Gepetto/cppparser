@@ -76,7 +76,7 @@ void done(int k)
 }
 
 
-void onintr(int ignore)
+void onintr(BTYACC_TP_UNUSED() int ignore)
 {
     done(1);
 }
@@ -334,6 +334,7 @@ void create_file_names()
     text_file_name[len + 5] = 't';
     union_file_name[len + 5] = 'u';
 
+#ifdef _WIN32
     if(mktemp(action_file_name)==NULL) {
       fprintf(stderr, "btyacc: Cannot create temporary file\n");
       exit(1);
@@ -346,6 +347,27 @@ void create_file_names()
       fprintf(stderr, "btyacc: Cannot create temporary file\n");
       exit(1);
     }
+#else
+	int mkstemp_fd = -1;
+    if((mkstemp_fd = mkstemp(action_file_name)) < 0) {
+      fprintf(stderr, "btyacc: Cannot create temporary file\n");
+      exit(1);
+    }
+	close(mkstemp_fd);
+	mkstemp_fd = -1;
+    if((mkstemp_fd = mkstemp(text_file_name)) < 0) {
+      fprintf(stderr, "btyacc: Cannot create temporary file\n");
+      exit(1);
+    }
+	close(mkstemp_fd);
+	mkstemp_fd = -1;
+    if((mkstemp_fd = mkstemp(union_file_name)) < 0) {
+      fprintf(stderr, "btyacc: Cannot create temporary file\n");
+      exit(1);
+    }
+	close(mkstemp_fd);
+	mkstemp_fd = -1;
+#endif
 
     len = strlen(file_prefix);
 

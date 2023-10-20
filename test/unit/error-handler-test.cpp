@@ -49,7 +49,7 @@ TEST_CASE_METHOD(ErrorHandlerTest, "Error line and column")
 
   bool                    errHandlerCalled = false;
   CppParser::ErrorHandler errHandler =
-    [&errHandlerCalled](const char* errLineText, size_t lineNum, size_t errorStartPos, int lexerContext) {
+    [&errHandlerCalled](const char* errLineText, size_t lineNum, size_t errorStartPos, int /* lexerContext */) {
       errHandlerCalled = true;
       CHECK(errLineText != nullptr);
       CHECK(lineNum == 2);

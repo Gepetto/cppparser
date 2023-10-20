@@ -34,7 +34,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-inline bool selectAllFiles(const std::string& file)
+inline bool selectAllFiles(const std::string&)
 {
   return true;
 }

@@ -19,9 +19,11 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost COMPONENTS filesystem program_options REQUIRED)
 
+set(_catch_hpp_file "${CMAKE_CURRENT_LIST_DIR}/src/catch/catch.hpp")
+
 # TODO: has to be upgraded soon.
-if (NOT EXISTS "${CMAKE_SOURCE_DIR}/src/catch/catch.hpp")
-  file(DOWNLOAD "https://github.com/catchorg/Catch2/releases/download/v2.13.10/catch.hpp" "${CMAKE_CURRENT_LIST_DIR}/src/catch/catch.hpp")
+if (NOT EXISTS ${_catch_hpp_file})
+  file(DOWNLOAD "https://github.com/catchorg/Catch2/releases/download/v2.13.10/catch.hpp" ${_catch_hpp_file})
 endif()
 
 #############################################
@@ -46,7 +48,7 @@ set_source_files_properties(src/parser.tab.h GENERATED)
 
 add_custom_command(
 	OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.tab.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.tab.h
-	COMMAND $<TARGET_FILE:btyacc> -v -b parser -d ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.y
+	COMMAND ${CMAKE_COMMAND} -P btyacc_cmp.cmake -D_btyacc=$<TARGET_FILE:btyacc> -D_parser_y=${CMAKE_CURRENT_SOURCE_DIR}/src/parser.y
 #	COMMAND ${CMAKE_COMMAND} -E copy y_tab.c ${CMAKE_CURRENT_SOURCE_DIR}/parser.tab.cpp
 #	COMMAND ${CMAKE_COMMAND} -E copy y_tab.h ${CMAKE_CURRENT_SOURCE_DIR}/parser.tab.h
 	COMMAND ${CMAKE_COMMAND} -E copy parser.tab.c ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.tab.cpp
@@ -85,7 +87,7 @@ target_link_libraries(cppparser
 target_include_directories(
 	cppparser
 	PUBLIC
-		pub
+		include
 	PRIVATE
 		hack
 )
@@ -188,27 +190,8 @@ if(NOT MSVC)
 			-Wno-unused-variable
 			-Wno-attributes
 			-Wno-unused-value
+			-Wno-unused-function
 			-Wno-uninitialized
 			-Wno-unused-but-set-variable
 	)
-endif()
-
-find_program(
-	MARKDOWN_PP
-	"markdown-pp"
-	PATHS ENV PATH
-)
-
-if(NOT ${MARKDOWN_PP} MATCHES "MARKDOWN_PP-NOTFOUND")
-	add_custom_command(
-		OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/README.md
-		COMMAND ${MARKDOWN_PP} ${CMAKE_CURRENT_SOURCE_DIR}/src/README.mdpp -o ${CMAKE_CURRENT_SOURCE_DIR}/README.md
-		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/README.mdpp ${RESPATHS} ${EXAMPLE_HEADERS}
-		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-	)
-	add_custom_target(
-		ReadMe ALL
-		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/README.md)
-else()
-  message("Markdown-pp NOT FOUND: README cannot be updated.")
 endif()

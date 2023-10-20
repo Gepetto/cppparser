@@ -28,11 +28,11 @@
 #include "cppast.h"
 #include "cppconst.h"
 
-namespace fs = boost::filesystem;
+namespace bfs = boost::filesystem;
 
 using CppProgFileSelecter = std::function<bool(const std::string&)>;
 
-void collectFiles(std::vector<std::string>& files, const fs::path& path, const CppProgFileSelecter& fileSelector);
+void collectFiles(std::vector<std::string>& files, const bfs::path& path, const CppProgFileSelecter& fileSelector);
 
 inline std::vector<std::string> collectFiles(const std::string& folder, const CppProgFileSelecter& fileSelector)
 {

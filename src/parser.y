@@ -2045,9 +2045,9 @@ ErrorHandler gErrorHandler = defaultErrorHandler;
 /**
  * yyparser() invokes this function when it encounters unexpected token.
  */
-void yyerror_detailed  (  char* text,
-              int errt,
-              YYSTYPE& errt_value,
+void yyerror_detailed  (  char*,
+              int,
+              YYSTYPE&,
               YYPOSN& errt_posn
             )
 {

@@ -77,7 +77,7 @@ void print_pos(char *st_line, char *st_cptr)
 
 int read_errs = 0;
 
-void error(int lineno, char *line, char *cptr, char *msg, ...)
+void error(BTYACC_TP_UNUSED() int lineno, BTYACC_TP_UNUSED() char *line, BTYACC_TP_UNUSED() char *cptr, char *msg, ...)
 {
   char sbuf[512];
   va_list args;

@@ -441,6 +441,7 @@ loop:
 	need_newline = 0;
 	if (get_line()) goto loop;
 	unterminated_text(t_lineno, t_line, t_cptr);
+	BTYACC_TP_FALLTHROUGH();
     case '\'':
     case '"':
 	putc(c, f);
@@ -1281,6 +1282,7 @@ void advance_to_start()
 	switch (keyword()) {
 	case MARK:
 	    no_grammar();
+		BTYACC_TP_FALLTHROUGH();
 	case TEXT:
 	    copy_text();
 	    break;
@@ -1668,6 +1670,7 @@ loop:
 	get_line();
 	if (line) goto loop;
 	unterminated_action(a_lineno, a_line, a_cptr);
+	BTYACC_TP_FALLTHROUGH();
     case ';':
 	if (depth > 0) goto loop;
 	fprintf(f, "\n");

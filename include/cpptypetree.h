@@ -76,7 +76,7 @@ struct CppTypeTreeNode
   {
     if (cppObjSet.count(cppObj))
       return true;
-    for (const auto child : children)
+    for (const auto& child : children)
     {
       if (child.second.has(cppObj))
         return true;

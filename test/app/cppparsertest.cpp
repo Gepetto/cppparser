@@ -581,7 +581,7 @@ CppParser constructCppParserForTest()
   parser.addRenamedKeyword("const", "CONST");
   parser.addRenamedKeyword("noexcept", "wxNOEXCEPT");
 
-  return std::move(parser);
+  return parser;
 }
 
 int main(int argc, char** argv)

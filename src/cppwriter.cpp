@@ -226,7 +226,7 @@ void CppWriter::emitPragma(const CppPragma* pragmaObj, std::ostream& stm) const
   stm << '#' << preproIndent_ << "pragma " << pragmaObj->defn_ << '\n';
 }
 
-void CppWriter::emitBlob(const CppBlob* blobObj, std::ostream& stm, bool formatLineStarts, CppIndent indentation) const
+void CppWriter::emitBlob(const CppBlob* blobObj, std::ostream& stm, bool, CppIndent) const
 {
   // if (formatLineStarts)
   // {
@@ -253,7 +253,7 @@ void CppWriter::emitBlob(const CppBlob* blobObj, std::ostream& stm, bool formatL
 
 void CppWriter::emitVarType(const CppVarType* varTypeObj, std::ostream& stm) const
 {
-  const auto attr = varTypeObj->typeAttr() | (isConst(varTypeObj) ? CppIdentifierAttrib::kConst : 0);
+  const auto attr = varTypeObj->typeAttr() | (isConst(varTypeObj) ? CppIdentifierAttrib::kConst : static_cast<CppIdentifierAttrib>(0));
   emitAttribute(attr, stm);
   if (varTypeObj->compound())
     emit(varTypeObj->compound(), stm, CppIndent(), true);
@@ -798,7 +798,7 @@ void CppWriter::emitTypeConverter(const CppTypeConverter* typeConverterObj,
 
 void CppWriter::emitDocComment(const CppDocComment* docCommentObj,
                                std::ostream&        stm,
-                               CppIndent            indentation /* = CppIndent()*/) const
+                               CppIndent         /* indentation = CppIndent()*/) const
 {
   stm << docCommentObj->doc_ << '\n';
 }
@@ -940,7 +940,7 @@ inline void emitOperator(std::ostream& stm, CppOperator op)
 
 void CppWriter::emitExprAtom(const CppExprAtom& exprAtm,
                              std::ostream&      stm,
-                             CppIndent          indentation /*= CppIndent()*/) const
+                             CppIndent       /* indentation = CppIndent()*/) const
 {
   switch (exprAtm.type)
   {

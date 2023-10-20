@@ -29,19 +29,19 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <boost/program_options.hpp>
 #include <boost/system/config.hpp>
 
-namespace fs  = boost::filesystem;
+namespace bfs  = boost::filesystem;
 namespace bpo = boost::program_options;
 
 struct TestParam
 {
-  fs::path inputPath;
-  fs::path outputPath;
-  fs::path masterPath;
+  bfs::path inputPath;
+  bfs::path outputPath;
+  bfs::path masterPath;
 
   bool isValid() const
   {
-    if (!fs::is_directory(inputPath) || (fs::exists(outputPath) && !fs::is_directory(outputPath))
-        || (!fs::is_directory(masterPath)))
+    if (!bfs::is_directory(inputPath) || (bfs::exists(outputPath) && !bfs::is_directory(outputPath))
+        || (!bfs::is_directory(masterPath)))
       return false;
     return true;
   }
@@ -54,7 +54,7 @@ struct TestParam
 
     std::cout << outputPath.string() << std::endl;
 
-    fs::create_directories(outputPath);
+    bfs::create_directories(outputPath);
   }
 };
 
@@ -115,7 +115,7 @@ public:
   TestParam extractParamsForFullTest() const
   {
     TestParam param;
-    auto      defaultTestFolderParent = fs::path(__FILE__).parent_path().parent_path() / "e2e";
+    auto      defaultTestFolderParent = bfs::path(__FILE__).parent_path().parent_path() / "e2e";
     if (vm_.count("input-folder"))
       param.inputPath = vm_["input-folder"].as<std::string>();
     else
